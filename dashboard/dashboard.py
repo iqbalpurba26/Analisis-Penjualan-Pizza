@@ -73,10 +73,10 @@ order_per_bulan = create_order_per_bulan(main_df)
 pendapatan_per_bulan = create_pendapatan_per_bulan(main_df)
 ukuran_pizza = create_ukuran_pizza(main_df)
 kategori_pizza = create_kategori_pizza(main_df)
-nama_pizza = create_nama_pizza_df(main_df)
+nama_pizza = create_nama_pizza_df(main_df).head()
 
 st.header("ANALISIS PENJUALAN PIZZA")
-
+st.write('Analisis penjualan pizza dapat memberikan sejumlah manfaat bagi bisnis restoran atau toko pizza. Diantara manfaatnya itu adalah dapat mengoptimasi menu, pengelolaan persediaan, strategi harga, dan masih banyak lagi. Analisis penjualan pizza yang baik memberikan data yang menarik kepada suatu restoran. Untuk memudahkan proses penyampaian data, maka digunakanlah teknik visualisasi data.')
 
 st.subheader("Perbandingan Penjualan Harian")
 plt.figure(figsize=(20, 7))
@@ -87,6 +87,15 @@ plt.ylabel("Total Pesanan", fontsize=20)
 plt.tick_params(axis='y', labelsize=20)
 plt.tick_params(axis='x', labelsize=20)
 st.pyplot(plt)
+
+hari_tinggi = order_per_hari.index[0]
+hari_terendah = order_per_hari.index[-1]
+penjualan_tinggi = order_per_hari.iloc[0]
+penjualan_terendah = order_per_hari.iloc[-1]
+
+st.write(
+    f"Dari hasil visualisasi data tersebut ditemukan bahwa, penjualan pizza tertinggi terjadi pada hari : **{hari_tinggi}** dengan total penjualan sebanyak **{penjualan_tinggi}**. Sedangkan penjualan pizza terendah terjadi pada hari **{hari_terendah}** dengan total penjualan sebanyak **{penjualan_terendah}**")
+
 
 st.markdown("<br>", unsafe_allow_html=True)
 
@@ -99,6 +108,14 @@ plt.ylabel("Bulan", fontsize=20)
 plt.tick_params(axis='y', labelsize=20)
 plt.tick_params(axis='x', labelsize=20)
 st.pyplot(plt)
+
+bulan_tinggi = order_per_bulan.index[0]
+bulan_terendah = order_per_bulan.index[-1]
+penjualan_bulan_tinggi = order_per_bulan.iloc[0]
+penjualan_bulan_terendah = order_per_bulan.iloc[-1]
+
+st.write(
+    f"Dari hasil visualisasi data tersebut ditemukan bahwa, penjualan pizza tertinggi terjadi pada bulan : **{bulan_tinggi}** dengan total penjualan sebanyak **{penjualan_tinggi}**. Sedangkan penjualan pizza terendah terjadi pada bulan **{bulan_terendah}** dengan total penjualan sebanyak **{penjualan_terendah}**")
 
 st.markdown("<br>", unsafe_allow_html=True)
 
@@ -114,6 +131,17 @@ plt.tick_params(axis='y', labelsize=20)
 plt.grid(axis='y')
 st.pyplot(plt)
 
+analisis_pendapatan = pendapatan_per_bulan.sort_values(ascending=False)
+
+bulan_pendapatan_tinggi = analisis_pendapatan.index[0]
+bulan_pendapatan_terendah = analisis_pendapatan.index[-1]
+pendapatan_bulan_tinggi = analisis_pendapatan.iloc[0]
+pendapatan_bulan_terendah = analisis_pendapatan.iloc[-1]
+
+st.write(
+    f"Dari hasil visualisasi data tersebut ditemukan bahwa, pendapatan tertinggi dari penjualan pizza terjadi pada bulan **{bulan_pendapatan_tinggi}** dengan total pendapatan sebanyak **{pendapatan_bulan_tinggi} USD**. Sedangkan penjualan pizza terendah terjadi pada bulan **{bulan_pendapatan_terendah}** dengan total pendapatan sebanyak **{pendapatan_bulan_terendah} USD**")
+
+
 st.markdown("<br>", unsafe_allow_html=True)
 
 st.subheader('Perbandingan Penjualan Berdasarkan Ukuran Pizza')
@@ -126,6 +154,15 @@ plt.tick_params(axis='x', labelsize=20)
 plt.tick_params(axis='y', labelsize=20)
 st.pyplot(plt)
 
+
+ukuran_terlaris = ukuran_pizza.index[0]
+ukuran_kurang_laris = ukuran_pizza.index[-1]
+total_penjualan_laris = ukuran_pizza.iloc[0]
+total_penjualan_kurang = ukuran_pizza.iloc[-1]
+
+st.write(
+    f"Dari hasil visualisasi data tersebut ditemukan bahwa, ukuran pizza terlaris diduduki oleh ukuran **{ukuran_terlaris}** dengan total penjualan sebanyak **{total_penjualan_laris} buah**. Sedangkan ukuran pizza paling rendah penjualannnya yaitu ukuran **{ukuran_kurang_laris}** dengan total penjualan sebanyak **{total_penjualan_kurang} buah**")
+
 st.markdown("<br>", unsafe_allow_html=True)
 
 st.subheader('Perbandingan Penjualan Berdasarkan Kategori Pizza')
@@ -134,11 +171,20 @@ pie = ax.pie(kategori_pizza.values,
              labels=kategori_pizza.index, autopct='%1.2f%%')
 st.pyplot(fig)
 
+
+kategori_terlaris = kategori_pizza.idxmax()
+kategori_kurang_laris = kategori_pizza.idxmin()
+total_kategori_laris = kategori_pizza.max()
+total_kategori_kurang = kategori_pizza.min()
+
+st.write(
+    f"Dari hasil visualisasi data tersebut ditemukan bahwa, kategori pizza terlaris adalah kategori **{kategori_terlaris}** dengan total penjualan sebanyak **{total_kategori_laris} buah**. Sedangkan kateogri pizza paling rendah penjualannnya yaitu ukuran **{kategori_kurang_laris}** dengan total penjualan sebanyak **{total_kategori_kurang} buah**")
+
 st.markdown("<br>", unsafe_allow_html=True)
 
-st.subheader('Pizza Terlaris')
+st.subheader('Top 5 Pizza Terlaris')
 plt.figure(figsize=(20, 10))
-sns.barplot(x=nama_pizza.head().index, y=nama_pizza.head().values)
+sns.barplot(x=nama_pizza.index, y=nama_pizza.head().values)
 plt.title('5 Pizza Terlaris', fontsize=20)
 plt.xlabel('Nama Pizza', fontsize=20)
 plt.xticks(rotation=90)
@@ -146,3 +192,11 @@ plt.ylabel('Jumlah Pesanan', fontsize=20)
 plt.tick_params(axis='x', labelsize=20)
 plt.tick_params(axis='y', labelsize=20)
 st.pyplot(plt)
+
+kategori_terlaris = nama_pizza.idxmax()
+kategori_kurang_laris = nama_pizza.idxmin()
+total_kategori_laris = nama_pizza.max()
+total_kategori_kurang = nama_pizza.min()
+
+st.write(
+    f"Hasil visualisasi data diatas merupakan top 5 nama pizza terlaris dalam periode tertentu. Dari hasil visualisasi data tersebut ditemukan bahwa, nama pizza terlaris pada posisi pertama adalah **{kategori_terlaris}** dengan total penjualan sebanyak **{total_kategori_laris} buah**. Sedangkan pada posisi kelimad ditempati oleh **{kategori_kurang_laris}** dengan total penjualan sebanyak **{total_kategori_kurang} buah**")
