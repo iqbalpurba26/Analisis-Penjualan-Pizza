@@ -115,7 +115,7 @@ penjualan_bulan_tinggi = order_per_bulan.iloc[0]
 penjualan_bulan_terendah = order_per_bulan.iloc[-1]
 
 st.write(
-    f"Dari hasil visualisasi data tersebut ditemukan bahwa, penjualan pizza tertinggi terjadi pada bulan : **{bulan_tinggi}** dengan total penjualan sebanyak **{penjualan_tinggi}**. Sedangkan penjualan pizza terendah terjadi pada bulan **{bulan_terendah}** dengan total penjualan sebanyak **{penjualan_terendah}**")
+    f"Dari hasil visualisasi data tersebut ditemukan bahwa, penjualan pizza tertinggi terjadi pada bulan : **{bulan_tinggi}** dengan total penjualan sebanyak **{penjualan_bulan_tinggi}**. Sedangkan penjualan pizza terendah terjadi pada bulan **{bulan_terendah}** dengan total penjualan sebanyak **{penjualan_bulan_terendah}**")
 
 st.markdown("<br>", unsafe_allow_html=True)
 
