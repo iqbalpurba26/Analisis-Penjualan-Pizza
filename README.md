@@ -26,9 +26,9 @@ streamlit run dashboard.py
 
 ## Screenshot Tampilan
 
-![GAMBAR 1](screenshot/image.png)
+![GAMBAR 1](screenshot/ss1.png)
 
-![GAMBAR 2](screenshot/image-1.png)
+![GAMBAR 2](screenshot/ss2.png)
 
 ![GAMBAR 3](screenshot/image-2.png)
 
